@@ -1,5 +1,5 @@
 const server = require("http").createServer();
-const port = 9000;
+const port = 5000;
 const io = require("socket.io")(server, {
   // enable cors
   cors: {
