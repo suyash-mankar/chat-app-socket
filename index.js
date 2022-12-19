@@ -1,7 +1,7 @@
 const server = require("http").createServer();
 const io = require("socket.io")(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://chat-app-t7c1.onrender.com",
   },
 });
 
@@ -22,6 +22,8 @@ io.on("connection", (client) => {
 
   client.on("addUsers", (userData) => {
     addUser(userData, client.id);
+    console.log("users", users);
+
     io.emit("getUsers", users);
   });
 
