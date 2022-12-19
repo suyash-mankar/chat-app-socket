@@ -8,7 +8,7 @@ const port = 5000;
 const io = require("socket.io")(server, {
   // enable cors
   cors: {
-    origin: "https://chat-app-t7c1.onrender.com",
+    origin: "*",
   },
 });
 
