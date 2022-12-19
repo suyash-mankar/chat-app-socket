@@ -22,8 +22,6 @@ io.on("connection", (client) => {
 
   client.on("addUsers", (userData) => {
     addUser(userData, client.id);
-    console.log("users", users);
-
     io.emit("getUsers", users);
   });
 
