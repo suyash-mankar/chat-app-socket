@@ -1,4 +1,9 @@
-const server = require("http").createServer();
+function requestHandler(req, res) {
+  res.writeHead(200, { "Content-Type": "text/plain" });
+  res.end("<h1> server is running </h1>");
+}
+
+const server = require("http").createServer(requestHandler);
 const port = 5000;
 const io = require("socket.io")(server, {
   // enable cors
@@ -43,5 +48,5 @@ server.listen(port, function (err) {
     console.log("error in starting socket server: ", err);
     return;
   }
-  console.log("socket server is running on port: 9000");
+  console.log("socket server is running on port: ", port);
 });
