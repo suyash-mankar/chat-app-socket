@@ -13,13 +13,19 @@ const io = require("socket.io")(server, {
 });
 
 // array to keep a list of active users
-let users = [];
+var users = [];
 
 // add active user in the users array
 const addUser = (userData, clientId) => {
-  // if the userData doesn't exist in users array
-  !users.some((user) => user.sub === userData.sub) &&
+  // if the user already exists in the array, update the socket id (socket id will change whenever we refresh the app)
+  // array.some (...) --> returns true or false
+  if (users.some((user) => user.sub === userData.sub)) {
+    let existingUser = users.find((user) => user.sub === userData.sub);
+    existingUser.clientId = clientId;
+  } else {
+    // if the user doesn't exist in the users array
     users.push({ ...userData, clientId });
+  }
 };
 
 // get a particular user as per given userId --> used to find the receiver when we want to send msg
@@ -39,7 +45,7 @@ io.on("connection", (client) => {
   // when client hit "sendMessage", call getUser and emit "getMessage" with message data --> to send msg to a particular receiver
   client.on("sendMessage", (data) => {
     const user = getUser(data.receiverId);
-    io.emit("getMessage", data);
+    io.to(user.clientId).emit("getMessage", data);
   });
 });
 
