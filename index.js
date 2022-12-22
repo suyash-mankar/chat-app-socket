@@ -38,9 +38,8 @@ io.on("connection", (client) => {
 
   // when client hit "sendMessage", call getUser and emit "getMessage" with message data --> to send msg to a particular receiver
   client.on("sendMessage", (data) => {
-    console.log("sending msg");
     const user = getUser(data.receiverId);
-    io.to(user.clientId).emit("getMessage", data);
+    io.emit("getMessage", data);
   });
 });
 
